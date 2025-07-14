@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -29,6 +30,7 @@
     <webjars-bootstrap.version>5.3.6</webjars-bootstrap.version>
     <webjars-font-awesome.version>4.7.0</webjars-font-awesome.version>
 
+    <spring.ai.version>1.0.0</spring.ai.version>
     <checkstyle.version>10.25.0</checkstyle.version>
     <jacoco.version>0.8.13</jacoco.version>
     <libsass.version>0.3.4</libsass.version>
@@ -64,6 +66,16 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.ai</groupId>
+      <artifactId>spring-ai-model</artifactId>
+      <version>${spring.ai.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.ai</groupId>
+      <artifactId>spring-ai-starter-mcp-server-webmvc</artifactId>
+      <version>${spring.ai.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -145,10 +157,17 @@
       <groupId>jakarta.xml.bind</groupId>
       <artifactId>jakarta.xml.bind-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
 
   </dependencies>
 
   <build>
+    <finalName>${project.artifactId}</finalName>
+
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -162,7 +181,8 @@
             <configuration>
               <rules>
                 <requireJavaVersion>
-                  <message>This build requires at least Java ${java.version}, update your JVM, and run the build again</message>
+                  <message>This build requires at least Java ${java.version}, update your JVM, and run the build again
+                  </message>
                   <version>${java.version}</version>
                 </requireJavaVersion>
               </rules>
@@ -362,7 +382,9 @@
             <configuration>
               <inputPath>${basedir}/src/main/scss/</inputPath>
               <outputPath>${basedir}/src/main/resources/static/resources/css/</outputPath>
-              <includePath>${project.build.directory}/webjars/META-INF/resources/webjars/bootstrap/${webjars-bootstrap.version}/scss/</includePath>
+              <includePath>
+                ${project.build.directory}/webjars/META-INF/resources/webjars/bootstrap/${webjars-bootstrap.version}/scss/
+              </includePath>
             </configuration>
             <executions>
               <execution>
